@@ -28,6 +28,7 @@ function renderMenu() {
   const menuContainer = document.getElementById('menu-container');
   
   // Iterate over each category in the order defined in data.js
+  // Iterate over each category in the order defined in data.js
   Object.keys(menuData).forEach(category => {
     const items = menuData[category];
     
@@ -35,11 +36,24 @@ function renderMenu() {
     const categorySection = document.createElement('div');
     categorySection.className = 'menu-category';
     
+    // Header for Accordion
+    const categoryHeader = document.createElement('div');
+    categoryHeader.className = 'category-header';
+    
     const categoryTitle = document.createElement('h3');
     categoryTitle.textContent = category;
-    categorySection.appendChild(categoryTitle);
     
-    // Grid for items
+    // Chevron Icon
+    const icon = document.createElement('div');
+    icon.className = 'accordion-icon';
+    icon.innerHTML = `<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>`;
+    
+    categoryHeader.appendChild(categoryTitle);
+    categoryHeader.appendChild(icon);
+    
+    categorySection.appendChild(categoryHeader);
+    
+    // Grid for items (Hidden by default via CSS)
     const itemsGrid = document.createElement('div');
     itemsGrid.className = 'menu-grid';
     
@@ -75,6 +89,31 @@ function renderMenu() {
     });
     
     categorySection.appendChild(itemsGrid);
+
+    // Accordion Toggle Logic
+    categoryHeader.addEventListener('click', () => {
+      const isActive = categorySection.classList.contains('active');
+      
+      // Close all other sections (Optional: remove this block if you want multiple open)
+      /* 
+      document.querySelectorAll('.menu-category').forEach(el => {
+        el.classList.remove('active');
+      });
+      */
+
+      // Toggle current
+      if (isActive) {
+        categorySection.classList.remove('active');
+      } else {
+        // If "Close all" block above is uncommented, this simple toggle is enough. 
+        // If we want "One Open Only" behavior:
+        document.querySelectorAll('.menu-category').forEach(el => {
+            el.classList.remove('active');
+        });
+        categorySection.classList.add('active');
+      }
+    });
+
     menuContainer.appendChild(categorySection);
   });
 }
