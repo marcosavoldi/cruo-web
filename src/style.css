@@ -309,6 +309,58 @@ header {
   z-index: 1100;
 }
 
+/* Full Width Images */
+.full-width-image {
+  width: 100%;
+  height: 60vh; /* Occupy significant vertical space */
+  background-color: #ddd; /* Light gray placeholder */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  color: #888;
+  letter-spacing: 2px;
+  position: relative;
+}
+
+.full-width-image::after {
+  content: attr(data-label);
+  position: absolute;
+  text-transform: uppercase;
+  font-weight: 700;
+  opacity: 0.5;
+}
+
+.vertical-image-placeholder {
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+  background-color: #e5e5e5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+  font-weight: 600;
+  border-radius: var(--border-radius-lg);
+  position: relative;
+}
+
+.vertical-image-placeholder::after {
+  content: attr(data-label);
+  padding: 1rem;
+  text-align: center;
+}
+
+.map-container {
+  width: 100%;
+  border-radius: var(--border-radius-lg);
+  overflow: hidden; /* Round corners for iframe */
+  box-shadow: var(--shadow-card);
+  border: 1px solid #444;
+}
+
+/* Placeholder Img removed or repurposed */
 .social-btn {
   width: 50px;
   height: 50px;
