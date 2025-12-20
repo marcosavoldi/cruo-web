@@ -56,7 +56,7 @@ export const menuData = {
     { name: "TONNARELLA", price: 11, ingredients: "Pomodoro giallo siciliano, fior di latte, formaggio affumicato, tonno" },
     { name: "CALABRA", price: 11, ingredients: "Pomodoro, fior di latte, spianata, nduja, provola affumicata" }
   ],
-  "HAMBURGER (con patate rustiche)": [
+  "HAMBURGER": [
     { name: "CLASSIC BURGER", price: 10, ingredients: "Carne bovino, insalata, pomodoro, ketchup, pancetta" },
     { name: "CHEESEBURGER", price: 10, ingredients: "Carne bovino, insalata, pomodori, edamer, pancetta, salsa burger" },
     { name: "CARBONARO", price: 11, ingredients: "Carne manzo, pancetta, crema carbonara, insalata" },

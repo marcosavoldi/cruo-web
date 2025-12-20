@@ -4,7 +4,22 @@ import { menuData } from './data.js'
 document.addEventListener('DOMContentLoaded', () => {
   renderMenu();
   setupMobileNav();
+  setupCarousel();
 });
+
+function setupCarousel() {
+  const slides = document.querySelectorAll('.carousel-slide');
+  if (slides.length === 0) return;
+
+  let currentSlide = 0;
+  const slideInterval = 3000; // 3 seconds
+
+  setInterval(() => {
+    slides[currentSlide].classList.remove('active');
+    currentSlide = (currentSlide + 1) % slides.length;
+    slides[currentSlide].classList.add('active');
+  }, slideInterval);
+}
 
 function setupMobileNav() {
   const hamburger = document.querySelector('.hamburger');
@@ -56,6 +71,13 @@ function renderMenu() {
     // Grid for items (Hidden by default via CSS)
     const itemsGrid = document.createElement('div');
     itemsGrid.className = 'menu-grid';
+
+    if (category === 'HAMBURGER') {
+      const catDesc = document.createElement('p');
+      catDesc.className = 'category-description';
+      catDesc.textContent = 'tutti i nostri hamburger sono serviti con patate rustiche';
+      itemsGrid.appendChild(catDesc);
+    }
     
     items.forEach(item => {
       const itemCard = document.createElement('div');
