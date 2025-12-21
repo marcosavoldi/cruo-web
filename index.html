@@ -236,9 +236,14 @@
               </ul>
             </div>
           </div>
-          <div class="map-container">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2786.438258288596!2d9.75787637667771!3d45.75218797108018!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4781515a4a589e67%3A0x6b18c942858d46e3!2sPiazza%20Umberto%20I%2C%2024027%20Nembro%20BG!5e0!3m2!1sit!2sit!4v1701850000000!5m2!1sit!2sit"
+          <div class="map-container relative">
+            <div id="map-placeholder" class="map-overlay-placeholder">
+              <p>Per visualizzare la mappa è necessario accettare i cookie di terze parti.</p>
+              <button id="btn-accept-map" class="btn btn-sm btn-primary" style="margin-top: 1rem;">Accetta e Carica
+                Mappa</button>
+            </div>
+            <iframe id="google-map"
+              data-src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2786.438258288596!2d9.75787637667771!3d45.75218797108018!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4781515a4a589e67%3A0x6b18c942858d46e3!2sPiazza%20Umberto%20I%2C%2024027%20Nembro%20BG!5e0!3m2!1sit!2sit!4v1701850000000!5m2!1sit!2sit"
               width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"
               referrerpolicy="no-referrer-when-downgrade">
             </iframe>
@@ -262,6 +267,7 @@
           <li><a href="#menu">Menu</a></li>
           <li><a href="#filosofia">Filosofia</a></li>
           <li><a href="#contatti">Contatti</a></li>
+          <li><a href="#" id="open-privacy-footer">Privacy Policy</a></li>
         </ul>
       </div>
     </div>
@@ -271,6 +277,103 @@
 
     </div>
   </footer>
+
+  <!-- Cookie Banner -->
+  <div id="cookie-banner" class="cookie-banner">
+    <div class="cookie-content">
+      <p>Utilizziamo cookie tecnici e, previo consenso, cookie di terze parti (Google Maps) per migliorare l’esperienza
+        di navigazione.
+        <br>Puoi accettare, rifiutare o gestire le tue preferenze. In assenza di consenso, i contenuti di terze parti
+        non verranno caricati.
+        <br>Per maggiori informazioni consulta la <a href="#" id="open-cookie-policy-banner">Cookie Policy</a>.
+      </p>
+      <div class="cookie-buttons">
+        <button id="btn-refuse-cookies" class="btn btn-outline-light">Rifiuta</button>
+        <button id="btn-accept-cookies" class="btn btn-primary">Accetta</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cookie Policy Modal -->
+  <div id="cookie-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <h2>COOKIE POLICY</h2>
+      <p>Il presente sito utilizza cookie tecnici e, previo consenso dell’utente, cookie di terze parti.</p>
+
+      <h3>1. Cookie tecnici</h3>
+      <p>I cookie tecnici sono necessari per il corretto funzionamento del sito e non richiedono il consenso
+        dell’utente.</p>
+
+      <h3>2. Cookie di terze parti</h3>
+      <p>Questo sito può utilizzare, previo consenso esplicito dell’utente, cookie di terze parti attraverso il servizio
+        Google Maps, fornito da Google LLC, al fine di consentire la visualizzazione della mappa interattiva.</p>
+      <p>Google Maps può raccogliere dati dell’utente, come indirizzo IP e informazioni di navigazione, anche al fine di
+        offrire servizi personalizzati. Il trattamento dei dati avviene secondo le modalità descritte nell’informativa
+        di Google.</p>
+      <p>Informativa Google: <a href="https://policies.google.com/privacy"
+          target="_blank">https://policies.google.com/privacy</a></p>
+      <p>L’utente può prestare o revocare il consenso in qualsiasi momento tramite il banner o le impostazioni del
+        browser.</p>
+
+      <h3>3. Gestione dei cookie</h3>
+      <p>L’utente può gestire o disabilitare i cookie direttamente dalle impostazioni del proprio browser. La
+        disabilitazione dei cookie di terze parti non compromette la navigazione del sito, ma impedisce la
+        visualizzazione della mappa.</p>
+
+      <p><strong>Ultimo aggiornamento: 21/12/2025</strong></p>
+    </div>
+  </div>
+
+  <!-- Privacy Policy Modal -->
+  <div id="privacy-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <h2>PRIVACY POLICY</h2>
+      <p>Ai sensi del Regolamento UE 2016/679 (GDPR), la presente informativa descrive le modalità di trattamento dei
+        dati personali degli utenti che visitano questo sito.</p>
+
+      <h3>1. Titolare del trattamento</h3>
+      <p>Titolare del trattamento è:<br>
+        [Nome attività / Ragione sociale]<br>
+        [Sede]<br>
+        [P. IVA]<br>
+        Email: [email]<br>
+        PEC: [pec se presente]</p>
+
+      <h3>2. Tipologia di dati trattati</h3>
+      <p>Il sito tratta:<br>
+        - dati di navigazione (log tecnici)<br>
+        - dati forniti volontariamente dall’utente tramite contatti email o telefonici</p>
+
+      <h3>3. Finalità del trattamento</h3>
+      <p>I dati sono trattati per:<br>
+        - rispondere alle richieste dell’utente<br>
+        - fornire informazioni sui servizi<br>
+        - garantire il corretto funzionamento del sito</p>
+
+      <h3>4. Base giuridica</h3>
+      <p>Il trattamento si basa:<br>
+        - sull’esecuzione di misure precontrattuali richieste dall’utente<br>
+        - sul consenso, ove previsto<br>
+        - sul legittimo interesse del titolare</p>
+
+      <h3>5. Modalità del trattamento</h3>
+      <p>I dati sono trattati con strumenti informatici e adottando misure di sicurezza adeguate.</p>
+
+      <h3>6. Comunicazione dei dati</h3>
+      <p>I dati non vengono ceduti a terzi, salvo obblighi di legge o servizi tecnici necessari (es. hosting).</p>
+
+      <h3>7. Diritti dell’interessato</h3>
+      <p>L’utente può esercitare i diritti di accesso, rettifica, cancellazione, limitazione e opposizione scrivendo al
+        titolare del trattamento.</p>
+
+      <h3>8. Contenuti di terze parti</h3>
+      <p>Il sito può includere contenuti di terze parti (Google Maps) caricati solo previo consenso dell’utente.</p>
+
+      <p><strong>Ultimo aggiornamento: 21/12/2025</strong></p>
+    </div>
+  </div>
 
   <script type="module" src="/src/main.js"></script>
 </body>

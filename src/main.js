@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderMenu();
   setupMobileNav();
   setupCarousel();
+  setupCookieConsent();
 });
 
 function setupCarousel() {
@@ -158,3 +159,120 @@ function renderMenu() {
     menuContainer.appendChild(categorySection);
   });
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Other inits are at top of file, but we can init here too or move it up.
+    // Actually the top of file has:
+    /*
+    document.addEventListener('DOMContentLoaded', () => {
+      renderMenu();
+      setupMobileNav();
+      setupCarousel();
+    });
+    */
+   // I should add setupCookieConsent() to the existing listener or just call it here if valid?
+   // Better to add it to the top listener.
+});
+
+/* --- GDPR / Cookie Consent Logic --- */
+function setupCookieConsent() {
+  const cookieBanner = document.getElementById('cookie-banner');
+  const btnAccept = document.getElementById('btn-accept-cookies');
+  const btnRefuse = document.getElementById('btn-refuse-cookies');
+  const btnAcceptMap = document.getElementById('btn-accept-map');
+  
+  // Modals
+  const cookieModal = document.getElementById('cookie-modal');
+  const privacyModal = document.getElementById('privacy-modal');
+  const openCookieBtn = document.getElementById('open-cookie-policy-banner');
+  const openPrivacyBtn = document.getElementById('open-privacy-footer');
+  const closeButtons = document.querySelectorAll('.close-modal');
+
+  // Check Link in Banner
+  if (openCookieBtn) {
+    openCookieBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      cookieModal.style.display = 'block';
+    });
+  }
+
+  // Check Link in Footer
+  if (openPrivacyBtn) {
+    openPrivacyBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      privacyModal.style.display = 'block';
+    });
+  }
+
+  // Close Modals
+  closeButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      cookieModal.style.display = 'none';
+      privacyModal.style.display = 'none';
+    });
+  });
+
+  // Close when clicking outside
+  window.addEventListener('click', (e) => {
+    if (e.target === cookieModal) cookieModal.style.display = 'none';
+    if (e.target === privacyModal) privacyModal.style.display = 'none';
+  });
+
+  // Check Local Storage
+  const consent = localStorage.getItem('cruo_consent');
+
+  if (consent === 'true') {
+    loadGoogleMap();
+  } else {
+    // Show banner if not accepted (or if 'false' we might keep showing it or just respect 'false'?)
+    // Usually if 'false', banner shouldn't annoy, but user logic implies:
+    // "In assenza di consenso...". If they clicked Refuse, we respect it.
+    // If they never clicked, we show banner.
+    // Let's assume if it's explicitly 'false', we don't show banner but don't load map.
+    // But how do they change mind?
+    // User requirement: "Puoi accettare, rifiutare o gestire..."
+    // "Se non accetta al posto della mappa google deve comparire la frase..."
+    
+    // Simplification: Always show banner if consent is null.
+    if (consent === null) {
+      cookieBanner.style.display = 'block';
+    } 
+    // If consent is 'false', map placeholder is visible by default HTML state.
+  }
+
+  // Accept Logic
+  btnAccept.addEventListener('click', () => {
+    localStorage.setItem('cruo_consent', 'true');
+    cookieBanner.style.display = 'none';
+    loadGoogleMap();
+  });
+
+  // Refuse Logic
+  btnRefuse.addEventListener('click', () => {
+    localStorage.setItem('cruo_consent', 'false');
+    cookieBanner.style.display = 'none';
+  });
+
+  // Accept from Map Placeholder
+  if (btnAcceptMap) {
+    btnAcceptMap.addEventListener('click', () => {
+      localStorage.setItem('cruo_consent', 'true');
+      cookieBanner.style.display = 'none'; // precise logic: if banner was still open
+      loadGoogleMap();
+    });
+  }
+}
+
+function loadGoogleMap() {
+  const iframe = document.getElementById('google-map');
+  const placeholder = document.getElementById('map-placeholder');
+  
+  if (iframe && iframe.dataset.src) {
+    iframe.src = iframe.dataset.src;
+    // Hide placeholder
+    if (placeholder) {
+      placeholder.style.display = 'none';
+    }
+  }
+}
+
