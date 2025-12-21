@@ -218,32 +218,42 @@ function setupCookieConsent() {
     if (e.target === privacyModal) privacyModal.style.display = 'none';
   });
 
+  // Social Buttons
+  const socialButtons = document.querySelector('.social-floating');
+
+  // Helper to toggle social buttons force-hiding
+  const toggleSocial = (show) => {
+    if (!socialButtons) return;
+    if (show) {
+      socialButtons.style.setProperty('display', 'flex', 'important');
+    } else {
+      socialButtons.style.setProperty('display', 'none', 'important');
+    }
+  };
+
   // Check Local Storage
   const consent = localStorage.getItem('cruo_consent');
 
   if (consent === 'true') {
     loadGoogleMap();
+    toggleSocial(true);
   } else {
-    // Show banner if not accepted (or if 'false' we might keep showing it or just respect 'false'?)
-    // Usually if 'false', banner shouldn't annoy, but user logic implies:
-    // "In assenza di consenso...". If they clicked Refuse, we respect it.
-    // If they never clicked, we show banner.
-    // Let's assume if it's explicitly 'false', we don't show banner but don't load map.
-    // But how do they change mind?
-    // User requirement: "Puoi accettare, rifiutare o gestire..."
-    // "Se non accetta al posto della mappa google deve comparire la frase..."
+    toggleSocial(false); // Hide social initially
     
     // Simplification: Always show banner if consent is null.
     if (consent === null) {
       cookieBanner.style.display = 'block';
-    } 
-    // If consent is 'false', map placeholder is visible by default HTML state.
+    } else {
+        // If explicitly refused ('false'), we show social buttons
+        toggleSocial(true);
+    }
   }
 
   // Accept Logic
   btnAccept.addEventListener('click', () => {
     localStorage.setItem('cruo_consent', 'true');
     cookieBanner.style.display = 'none';
+    toggleSocial(true);
     loadGoogleMap();
   });
 
@@ -251,6 +261,7 @@ function setupCookieConsent() {
   btnRefuse.addEventListener('click', () => {
     localStorage.setItem('cruo_consent', 'false');
     cookieBanner.style.display = 'none';
+    toggleSocial(true);
   });
 
   // Accept from Map Placeholder
@@ -258,6 +269,7 @@ function setupCookieConsent() {
     btnAcceptMap.addEventListener('click', () => {
       localStorage.setItem('cruo_consent', 'true');
       cookieBanner.style.display = 'none'; // precise logic: if banner was still open
+      toggleSocial(true);
       loadGoogleMap();
     });
   }
