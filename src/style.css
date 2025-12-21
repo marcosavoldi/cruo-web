@@ -717,3 +717,8 @@ header {
   object-fit: cover;
   display: block;
 }
+
+/* Utility to disable transitions */
+.no-transition {
+  transition: none !important;
+}

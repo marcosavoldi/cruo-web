@@ -114,35 +114,43 @@ function renderMenu() {
 
     // Accordion Toggle Logic
     categoryHeader.addEventListener('click', (e) => {
-      // Prevent default behavior just in case
       e.preventDefault();
-
       const isActive = categorySection.classList.contains('active');
 
-      // 1. Close all other sections immediately
-      document.querySelectorAll('.menu-category').forEach(el => {
-        if (el !== categorySection) {
-          el.classList.remove('active');
-        }
-      });
-
       if (!isActive) {
-        // 2. Open the clicked section
+        // OPTIMIZED UX: Instant switch
+        
+        // 1. Instantly close others (no animation) to prevent layout drift
+        document.querySelectorAll('.menu-category.active').forEach(activeEl => {
+           // Disable transition temporarily
+           const grid = activeEl.querySelector('.menu-grid');
+           grid.style.transition = 'none';
+           activeEl.classList.remove('active');
+           
+           // Force reflow
+           void grid.offsetHeight; 
+           
+           // Restore transition (optional, but good for future re-opening)
+           setTimeout(() => {
+               grid.style.transition = '';
+           }, 50);
+        });
+
+        // 2. Open clicked section (with animation)
         categorySection.classList.add('active');
 
-        // 3. Scroll logic with a slight delay to allow layout to settle
-        requestAnimationFrame(() => {
-            const headerOffset = 100; // Height of fixed header + buffer
-            const elementPosition = categorySection.getBoundingClientRect().top + window.scrollY;
-            const offsetPosition = elementPosition - headerOffset;
+        // 3. Scroll IMMEDIATELY to the known top position
+        // Since previous items closed instantly, the layout is stable at the top
+        const headerOffset = 100;
+        const elementPosition = categorySection.getBoundingClientRect().top + window.scrollY;
+        const offsetPosition = elementPosition - headerOffset;
 
-            window.scrollTo({
-                top: offsetPosition,
-                behavior: 'smooth'
-            });
+        window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth' /* Smooth scroll to target */
         });
       } else {
-        // If clicking an already open section, just close it
+        // Just closing the current one - standard behavior
         categorySection.classList.remove('active');
       }
     });
