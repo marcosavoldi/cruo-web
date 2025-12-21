@@ -192,7 +192,10 @@ header {
 
 /* Hero Section */
 .hero {
-  height: 85vh;
+  /* Reduced height for desktop too, as requested */
+  height: auto;
+  min-height: 50vh; 
+  padding: 180px 2rem 2rem 2rem; /* Increased top padding to center visually under header, reduced bottom */
   display: flex;
   align-items: center;
   justify-content: center;
