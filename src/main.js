@@ -113,26 +113,37 @@ function renderMenu() {
     categorySection.appendChild(itemsGrid);
 
     // Accordion Toggle Logic
-    categoryHeader.addEventListener('click', () => {
-      const isActive = categorySection.classList.contains('active');
-      
-      // Close all other sections (Optional: remove this block if you want multiple open)
-      /* 
-      document.querySelectorAll('.menu-category').forEach(el => {
-        el.classList.remove('active');
-      });
-      */
+    categoryHeader.addEventListener('click', (e) => {
+      // Prevent default behavior just in case
+      e.preventDefault();
 
-      // Toggle current
-      if (isActive) {
-        categorySection.classList.remove('active');
-      } else {
-        // If "Close all" block above is uncommented, this simple toggle is enough. 
-        // If we want "One Open Only" behavior:
-        document.querySelectorAll('.menu-category').forEach(el => {
-            el.classList.remove('active');
-        });
+      const isActive = categorySection.classList.contains('active');
+
+      // 1. Close all other sections immediately
+      document.querySelectorAll('.menu-category').forEach(el => {
+        if (el !== categorySection) {
+          el.classList.remove('active');
+        }
+      });
+
+      if (!isActive) {
+        // 2. Open the clicked section
         categorySection.classList.add('active');
+
+        // 3. Scroll logic with a slight delay to allow layout to settle
+        requestAnimationFrame(() => {
+            const headerOffset = 100; // Height of fixed header + buffer
+            const elementPosition = categorySection.getBoundingClientRect().top + window.scrollY;
+            const offsetPosition = elementPosition - headerOffset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+        });
+      } else {
+        // If clicking an already open section, just close it
+        categorySection.classList.remove('active');
       }
     });
 
