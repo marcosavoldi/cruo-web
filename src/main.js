@@ -76,7 +76,7 @@ function renderMenu() {
     if (category === 'HAMBURGER') {
       const catDesc = document.createElement('p');
       catDesc.className = 'category-description';
-      catDesc.textContent = 'tutti i nostri hamburger sono serviti con patate rustiche';
+      catDesc.textContent = 'tutti gli hamburger consumati in loco sono serviti con patate rustiche';
       itemsGrid.appendChild(catDesc);
     }
     
