@@ -231,8 +231,8 @@ function setupCookieConsent() {
     }
   };
 
-  // Check Local Storage
-  const consent = localStorage.getItem('cruo_consent');
+  // Check Session Storage
+  const consent = sessionStorage.getItem('cruo_consent');
 
   if (consent === 'true') {
     loadGoogleMap();
@@ -240,7 +240,7 @@ function setupCookieConsent() {
   } else {
     toggleSocial(false); // Hide social initially
     
-    // Simplification: Always show banner if consent is null.
+    // Always show banner if consent is not in session
     if (consent === null) {
       cookieBanner.style.display = 'block';
     } else {
@@ -251,7 +251,7 @@ function setupCookieConsent() {
 
   // Accept Logic
   btnAccept.addEventListener('click', () => {
-    localStorage.setItem('cruo_consent', 'true');
+    sessionStorage.setItem('cruo_consent', 'true');
     cookieBanner.style.display = 'none';
     toggleSocial(true);
     loadGoogleMap();
@@ -259,7 +259,7 @@ function setupCookieConsent() {
 
   // Refuse Logic
   btnRefuse.addEventListener('click', () => {
-    localStorage.setItem('cruo_consent', 'false');
+    sessionStorage.setItem('cruo_consent', 'false');
     cookieBanner.style.display = 'none';
     toggleSocial(true);
   });
@@ -267,7 +267,7 @@ function setupCookieConsent() {
   // Accept from Map Placeholder
   if (btnAcceptMap) {
     btnAcceptMap.addEventListener('click', () => {
-      localStorage.setItem('cruo_consent', 'true');
+      sessionStorage.setItem('cruo_consent', 'true');
       cookieBanner.style.display = 'none'; // precise logic: if banner was still open
       toggleSocial(true);
       loadGoogleMap();
